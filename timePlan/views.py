@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from .forms import ImageUploadForm
 from timePlan.models import PerfilUsuario
 from django.contrib.auth.decorators import login_required
 
@@ -18,6 +19,26 @@ def landing_page(request):
 
 def loginView(request):
     return render(request, 'timePlan/login.html')
+
+
+def handle_uploaded_file(f):
+    with open('some/file/img_test.png', 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+def upload_img(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = PerfilUsuario(image_field=request.FILES['file'])
+            instance.model_pic = form.cleaned_data['image']
+            instance.save()
+            return HttpResponseRedirect('/success/url/')
+    else:
+        form = ImageUploadForm()
+    return render(request, 'timePlan/UserProfile.html', {'form': form})
+
+
 
 
 def auth(request):

@@ -63,7 +63,14 @@
         <div class="row py-4">
             <div class="col text-center">
                 <p class="h4 text-center text-dark">Nombre de usuario</p>
-                <button type="button" class="btn btn-success">Cambiar imagen</button>
+                <button type="button" class="btn btn-success">Cambiar imagen
+                    <form action="{% url 'upload_img' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
+                        <p>
+                            <input id="id_image" type="file" class="" name="image">
+                        </p>
+                        <input type="submit" value="Submit" />
+                    </form>
+                </button>
             </div>
         </div>
 
