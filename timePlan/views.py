@@ -1,9 +1,11 @@
 from django.contrib.auth import authenticate, login
 from django.shortcuts import render
 from django.http import HttpResponse
-from timePlan.models import Plantilla, PerfilUsuario, Actividades
+from timePlan.models import PerfilUsuario
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url='')
 def landing_page(request):
     username = None
     # Esto hace que deba mostrar el nombre al loguearse
@@ -30,3 +32,8 @@ def auth(request):
         return landing_page(request)
     else:
         return HttpResponse(request, 'fallas')
+
+
+@login_required(login_url='')
+def userProfile(request):
+    return render(request, 'timePlan/UserProfile.html')

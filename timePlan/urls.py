@@ -10,4 +10,5 @@ from timePlan import views
 urlpatterns = [path('', views.loginView, name='login'),
                path('landing_page/', views.landing_page, name='landing_page'),
                path('auth', views.auth, name='auth'),
+               path('profile/', views.userProfile, name='profile'),
                ]
