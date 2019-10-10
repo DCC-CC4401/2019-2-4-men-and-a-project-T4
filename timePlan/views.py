@@ -4,16 +4,23 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import ImageUploadForm
 from timePlan.models import PerfilUsuario
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 
 @login_required(login_url='')
 def landing_page(request):
-    username = None
-    # Esto hace que deba mostrar el nombre al loguearse
     if request.user.is_authenticated:
-        username = request.user.username
+        usuario = request.user.PerfilUsuario
+        username = usuario.nombre
+        foto = usuario.foto_perfil
+        correo = usuario.nombre
+
+    # Esto hace que deba mostrar el nombre al loguearse
+
     return render(request, 'timePlan/LandingPage.html',
-                  {'username': username})  # el tercer elemento es contexto, son las variables
+                  {'username': username,
+                   'photo': foto,
+                   'email': correo})  # el tercer elemento es contexto, son las variables
     # a las que puede acceder el usuario
 
 
@@ -26,6 +33,7 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
 
+
 def upload_img(request):
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
@@ -37,8 +45,6 @@ def upload_img(request):
     else:
         form = ImageUploadForm()
     return render(request, 'timePlan/UserProfile.html', {'form': form})
-
-
 
 
 def auth(request):
@@ -57,4 +63,8 @@ def auth(request):
 
 @login_required(login_url='')
 def userProfile(request):
-    return render(request, 'timePlan/UserProfile.html')
+    if request.user.is_authenticated:
+        usuario = request.user.PerfilUsuario
+        username = usuario.nombre
+    return render(request, 'timePlan/UserProfile.html',
+                  {'username': username})
