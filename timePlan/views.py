@@ -7,10 +7,11 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='')
 def landing_page(request):
-    username = None
-    # Esto hace que deba mostrar el nombre al loguearse
     if request.user.is_authenticated:
-        username = request.user.username
+        usuario = request.user.PerfilUsuario
+        username = usuario.nombre
+    # Esto hace que deba mostrar el nombre al loguearse
+
     return render(request, 'timePlan/LandingPage.html',
                   {'username': username})  # el tercer elemento es contexto, son las variables
     # a las que puede acceder el usuario
@@ -36,4 +37,8 @@ def auth(request):
 
 @login_required(login_url='')
 def userProfile(request):
-    return render(request, 'timePlan/UserProfile.html')
+    if request.user.is_authenticated:
+        usuario = request.user.PerfilUsuario
+        username = usuario.nombre
+    return render(request, 'timePlan/UserProfile.html',
+                  {'username': username})

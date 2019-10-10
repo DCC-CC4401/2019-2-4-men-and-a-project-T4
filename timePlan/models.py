@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 
 
 # Create your models here.
-
+#
 class PerfilUsuario(models.Model):
-    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    usuario = models.OneToOneField(User, related_name='PerfilUsuario', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30)
     correo = models.EmailField(max_length=256, unique=True)
     foto_perfil = models.ImageField(upload_to='fotos', default='fotos/aceitunas.jpg')
