@@ -58,7 +58,7 @@ def auth(request):
         login(request, usuario)
         return landing_page(request)
     else:
-        return HttpResponse(request, 'fallas')
+        return render(request, 'timePlan/login.html', {})
 
 
 @login_required(login_url='')
@@ -66,5 +66,6 @@ def userProfile(request):
     if request.user.is_authenticated:
         usuario = request.user.PerfilUsuario
         username = usuario.nombre
+        foto = usuario.foto_perfil
     return render(request, 'timePlan/UserProfile.html',
-                  {'username': username})
+                  {'username': username, 'photo': foto})
