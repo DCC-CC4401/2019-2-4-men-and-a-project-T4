@@ -39,7 +39,6 @@
 
 <div class="wrapper">
 
-    {% block sidebar %}
         <nav id="sidebar">
         <div class="sidebar-header text-center py-5">
             <h1>LOGO</h1>
@@ -63,7 +62,7 @@
                         <a href="#">Seguridad</a>
                     </li>
                     <li>
-                        <a href="{% url 'amigos:index' %}">Amigos</a>
+                        <a href="#">Amigos</a>
                     </li>
                     <li>
                         <a href="#">Mis Actividades</a>
@@ -79,10 +78,8 @@
             <button type="button" class="btn btn-danger">Cerrar Sesión</button>
         </ul>
     </nav>
-    {% endblock %}
 
-    {% block horario_actividades %}
-        <div class="container-fluid text-center p-4 main">
+    <div class="container-fluid text-center p-4 main">
         <div class="row p-2 mx-2 rounded shadow table-success">
             <div class="col-9 text-left">
                 <h2 class="pt-2">Horario de actividades</h2>
@@ -670,8 +667,7 @@
                 </table>
             </div>
         </div>
-        </div>
-    {% endblock %}
+    </div>
 
 </div>
 </body>
