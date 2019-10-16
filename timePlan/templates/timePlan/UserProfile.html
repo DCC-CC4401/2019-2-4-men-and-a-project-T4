@@ -41,7 +41,7 @@
                         <a href="#">Seguridad</a>
                     </li>
                     <li>
-                        <a href="#">Amigos</a>
+                        <a href="{% url 'amigos:index' %}">Amigos</a>
                     </li>
                     <li>
                         <a href="#">Mis Actividades</a>
@@ -94,8 +94,7 @@
                            role="tab" aria-controls="profile" aria-selected="false">Seguridad</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link nav-link-fix" id="contact-tab-amigos" data-toggle="tab" href="#Amigos"
-                           role="tab" aria-controls="contact" aria-selected="false">Amigos</a>
+                        <a class="nav-link nav-link-fix" href="{% url 'amigos:index' %}">Amigos</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link nav-link-fix" id="contact-tab-actividades" data-toggle="tab"
