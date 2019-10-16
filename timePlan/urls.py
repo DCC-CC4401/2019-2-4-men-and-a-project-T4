@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views, forms
 
 from timePlan import views
@@ -12,5 +12,6 @@ urlpatterns = [path('', views.loginView, name='login'),
                path('landing_page/', views.landing_page, name='landing_page'),
                path('auth', views.auth, name='auth'),
                path('profile/', views.userProfile, name='profile'),
-               path('upload_img', views.upload_img, name='upload_img')
+               path('upload_img', views.upload_img, name='upload_img'),
+               path('amigos/', include('amigos.urls'))
                ]
