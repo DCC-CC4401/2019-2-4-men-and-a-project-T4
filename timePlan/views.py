@@ -58,7 +58,7 @@ def auth(request):
         login(request, usuario)
         return landing_page(request)
     else:
-        return HttpResponse(request, 'fallas')
+        return render(request, 'timePlan/login.html', {})
 
 
 @login_required(login_url='')
