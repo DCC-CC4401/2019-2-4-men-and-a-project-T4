@@ -66,5 +66,6 @@ def userProfile(request):
     if request.user.is_authenticated:
         usuario = request.user.PerfilUsuario
         username = usuario.nombre
+        foto = usuario.foto_perfil
     return render(request, 'timePlan/UserProfile.html',
-                  {'username': username})
+                  {'username': username, 'photo': foto})
