@@ -58,7 +58,8 @@
     <!--CONTENIDO PAGINA-->
     <div class="container-fluid p-4 main">
         <div class="row">
-            <img src="{% static 'img/turing.jpg' %}" class="circular mx-auto d-block shadow" height="250px">
+            <!--Foto de perfil-->
+            <img src="{{ photo.url }}" class="circular mx-auto d-block shadow" height="250px">
         </div>
         <div class="row py-4">
             <div class="col text-center">
@@ -134,14 +135,6 @@
                             </div>
                         </fieldset>
 
-                        <!--Fecha de nacimiento -->
-                        <fieldset disabled>
-                            <div class="form-group">
-                                <label for="disabledTextInput">Fecha de Nacimiento:</label>
-                                <input type="text" id="disabledTextInputFechaNacimiento" class="form-control"
-                                       placeholder="dd/mm/yyyy">
-                            </div>
-                        </fieldset>
                     </form>
                 </div>
 
