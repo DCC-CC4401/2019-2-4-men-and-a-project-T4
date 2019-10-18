@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import ImageUploadForm
-from timePlan.models import PerfilUsuario
+from timePlan.models import *
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
@@ -14,14 +14,19 @@ def landing_page(request):
         username = usuario.nombre
         foto = usuario.foto_perfil
         correo = usuario.nombre
+        actividades = Actividades.objects.get(user_id=usuario.id).nombre
+        return render(request, 'timePlan/LandingPage.html',
+                      {'username': username,
+                       'photo': foto,
+                       'email': correo,
+                       'activities': actividades})  # el tercer elemento es contexto, son las variables # a las que puede acceder el usuario
+    else:
+        return render(request, 'timePlan/login.html')
+
 
     # Esto hace que deba mostrar el nombre al loguearse
 
-    return render(request, 'timePlan/LandingPage.html',
-                  {'username': username,
-                   'photo': foto,
-                   'email': correo})  # el tercer elemento es contexto, son las variables
-    # a las que puede acceder el usuario
+
 
 
 def loginView(request):

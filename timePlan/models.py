@@ -20,17 +20,21 @@ class PerfilUsuario(models.Model):
     solicitudes = models.ManyToManyField('self')
 
 
+class Categoria(models.Model):
+    c_nombre = models.CharField(max_length=200)
+
+
 class Actividades(models.Model):
     user_id = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=200)
     h_inicio = models.DateTimeField()
     duracion = models.TimeField(null=True)
-    categoria = models.CharField(max_length=50)
+    categoria = models.ForeignKey(Categoria, null=True,on_delete=models.SET_NULL)
 
 
 class Plantilla(models.Model):
     user_id = models.ForeignKey(PerfilUsuario, on_delete=models.CASCADE)
     nombre = models.CharField(max_length=200)
     descripcion = models.CharField(max_length=200)
-    categoria = models.CharField(max_length=50)
+    categoria = models.ForeignKey(Categoria, null=True, on_delete=models.SET_NULL)
