@@ -1,4 +1,4 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from .forms import ImageUploadForm
@@ -69,3 +69,7 @@ def userProfile(request):
         foto = usuario.foto_perfil
     return render(request, 'timePlan/UserProfile.html',
                   {'username': username, 'photo': foto})
+
+def logoutView(request):
+	logout(request)
+	return render(request, 'timePlan/login.html')

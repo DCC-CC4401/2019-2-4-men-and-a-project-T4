@@ -25,7 +25,8 @@
         </div>
         <ul class="list-unstyled components text-left">
             <li>
-                <a href="#">Inicio</a>
+                <!--Referencia a Inicio-->
+                <a href="{%  url 'landing_page' %}">Inicio</a>
             </li>
             <li>
                 <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Perfil</a>
@@ -50,8 +51,11 @@
             </li>
         </ul>
 
+        <!--Logout-->
         <ul class="list-unstyled text-center py-4">
-            <button type="button" class="btn btn-danger">Cerrar Sesión</button>
+            <form action={%  url 'logout' %} method='post'> {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+            </form>
         </ul>
     </nav>
 
@@ -65,6 +69,7 @@
             <div class="col text-center">
                 <p class="h4 text-center text-dark">Nombre de usuario</p>
                 <button type="button" class="btn btn-success">Cambiar imagen
+                    <!--Cambiar foto de perfil-->
                     <form action="{% url 'upload_img' %}" method="post" enctype="multipart/form-data">{% csrf_token %}
                         <p>
                             <input id="id_image" type="file" class="" name="image">
