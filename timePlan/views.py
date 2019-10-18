@@ -14,19 +14,15 @@ def landing_page(request):
         username = usuario.nombre
         foto = usuario.foto_perfil
         correo = usuario.nombre
-        actividades = Actividades.objects.get(user_id=usuario.id).nombre
-        return render(request, 'timePlan/LandingPage.html',
-                      {'username': username,
-                       'photo': foto,
-                       'email': correo,
-                       'activities': actividades})  # el tercer elemento es contexto, son las variables # a las que puede acceder el usuario
-    else:
-        return render(request, 'timePlan/login.html')
+        actividades = Actividades.objects.filter(user_id=usuario.id)
 
+    return render(request, 'timePlan/LandingPage.html',
+                  {'username': username,
+                   'photo': foto,
+                   'email': correo,
+                   'activities': actividades})  # el tercer elemento es contexto, son las variables # a las que puede acceder el usuario
 
     # Esto hace que deba mostrar el nombre al loguearse
-
-
 
 
 def loginView(request):
@@ -75,6 +71,7 @@ def userProfile(request):
     return render(request, 'timePlan/UserProfile.html',
                   {'username': username, 'photo': foto})
 
+
 def logoutView(request):
-	logout(request)
-	return render(request, 'timePlan/login.html')
+    logout(request)
+    return render(request, 'timePlan/login.html')
