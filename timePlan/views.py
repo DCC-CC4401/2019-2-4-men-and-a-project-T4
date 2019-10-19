@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
 from .forms import ImageUploadForm
 from timePlan.models import PerfilUsuario
 from django.contrib.auth.decorators import login_required
@@ -33,7 +35,7 @@ def handle_uploaded_file(f):
         for chunk in f.chunks():
             destination.write(chunk)
 
-
+'''
 def upload_img(request):
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
@@ -44,6 +46,17 @@ def upload_img(request):
             return HttpResponseRedirect('/success/url/')
     else:
         form = ImageUploadForm()
+    return render(request, 'timePlan/UserProfile.html', {'form': form})
+
+'''
+def upload_img(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        test = form.is_valid()
+        if form.is_valid():
+            m = request.user.PerfilUsuario
+            m.foto_perfil = form.cleaned_data['image']
+            m.save()
     return render(request, 'timePlan/UserProfile.html', {'form': form})
 
 
