@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from .forms import ImageUploadForm
 from timePlan.models import *
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
+import json
 
 
 @login_required(login_url='')
@@ -14,13 +14,23 @@ def landing_page(request):
         username = usuario.nombre
         foto = usuario.foto_perfil
         correo = usuario.nombre
-        actividades = Actividades.objects.filter(user_id=usuario.id)
+        actividades_del_usuario = list(Actividades.objects.filter(user_id=usuario.id).values())
+
+        for each in actividades_del_usuario:
+            each['anho'] = int(each['h_inicio'].year)
+            each['mes'] = int(each['h_inicio'].month)
+            each['dia'] = int(each['h_inicio'].day)
+            each['hora_inicio'] = int(each['h_inicio'].hour)
+            each['hora_duracion'] = int(each['duracion'].hour)
+            del each['h_inicio']
+            del each['duracion']
+            each = json.dumps(each).encode('utf8')
 
     return render(request, 'timePlan/LandingPage.html',
                   {'username': username,
                    'photo': foto,
                    'email': correo,
-                   'activities': actividades})  # el tercer elemento es contexto, son las variables # a las que puede acceder el usuario
+                   'activities': actividades_del_usuario})  # el tercer elemento es contexto, son las variables # a las que puede acceder el usuario
 
     # Esto hace que deba mostrar el nombre al loguearse
 
@@ -59,7 +69,7 @@ def auth(request):
         login(request, usuario)
         return landing_page(request)
     else:
-        return render(request, 'timePlan/login.html', {})
+        return render(request, 'timePlan/login.html')
 
 
 @login_required(login_url='')
