@@ -20,7 +20,7 @@ def landing_page(request):
             each['anho'] = int(each['h_inicio'].year)
             each['mes'] = int(each['h_inicio'].month)
             each['dia'] = int(each['h_inicio'].day)
-            each['hora_inicio'] = int(each['h_inicio'].hour)
+            each['hora_inicio'] = int(each['h_inicio'].hour-3)
             each['hora_duracion'] = int(each['duracion'].hour)
             del each['h_inicio']
             del each['duracion']
