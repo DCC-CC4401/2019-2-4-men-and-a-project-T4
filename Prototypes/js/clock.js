@@ -1,51 +1,66 @@
-var startTime = 0
-var start = 0
-var end = 0
-var diff = 0
-var timerID = 0
+var h1 = document.getElementById('chronotime'),
+    start = document.getElementById('start'),
+    stop = document.getElementById('stop'),
+    clear = document.getElementById('clear'),
+    continue_button = document.getElementById('continue'),
+    seconds = 0, minutes = 0, hours = 0,
+    t,
+    now;
 
-function chrono(){
-	end = new Date()
-    diff = end - start
-	diff = new Date(diff)
-	var sec = diff.getSeconds()
-	var min = diff.getMinutes()
-	var hr = diff.getHours()-21
-	if (min < 10){
-		min = "0" + min
-	}
-	if (sec < 10){
-		sec = "0" + sec
-	}
-    document.getElementById("chronotime").innerHTML = hr + ":" + min + ":" + sec
-	timerID = setTimeout("chrono()", 10)
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            hours++;
+        }
+    }
+
+    h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    timer();
 }
-function chronoStart(){
-	document.chronoForm.startstop.value = "Detener"
-	document.chronoForm.startstop.onclick = chronoStop
-	document.chronoForm.reset.onclick = chronoReset
-    start = new Date()
-	chrono()
+
+function timer() {
+    t = setTimeout(add, 1000);
 }
-function chronoContinue(){
-	document.chronoForm.startstop.value = "Detener"
-	document.chronoForm.startstop.onclick = chronoStop
-	document.chronoForm.reset.onclick = chronoReset
-	start = new Date()-diff
-	start = new Date(start)
-	chrono()
+
+/* Start button */
+start.onclick = function () {
+	start.setAttribute("display",'none')
+	continue_button.setAttribute('display','none')
+	stop.setAttribute('display','block')
+    now = new Date();
+    timer();
+};
+
+/* Continue button*/
+continue_button.onclick = function (){
+	start.setAttribute("display",'none')
+	continue_button.setAttribute('display','none')
+	stop.setAttribute('display','block')
+	timer();
+};
+
+/* Stop button */
+stop.onclick = function () {
+	start.setAttribute("display",'none')
+	continue_button.setAttribute('display','block')
+	stop.setAttribute('display','none')
+    clearTimeout(t);
 }
-function chronoReset(){
-	document.getElementById("chronotime").innerHTML = "0:00:00"
-	start = new Date()
+
+/* Clear button */
+clear.onclick = function () {
+    h1.textContent = "00:00:00";
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
 }
-function chronoStopReset(){
-	document.getElementById("chronotime").innerHTML = "0:00:00"
-	document.chronoForm.startstop.onclick = chronoStart
-}
-function chronoStop(){
-	document.chronoForm.startstop.value = "Reanudar"
-	document.chronoForm.startstop.onclick = chronoContinue
-	document.chronoForm.reset.onclick = chronoStopReset
-	clearTimeout(timerID)
+
+function initClock() {
+    document.getElementById("buttonclock").setAttribute("display", "none")
+    document.getElementById("clock-section").setAttribute('display', 'block')
 }

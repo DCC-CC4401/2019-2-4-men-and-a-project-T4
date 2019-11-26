@@ -9,7 +9,7 @@
     <!-- BOOTSTRAP CSS, DO NOT DELETE -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
-    <script src="{% static 'js/clock.js' %}"></script>
+
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
     <script type="text/javascript">
@@ -87,24 +87,33 @@
             <div class="col-9 text-left">
                 <h2 class="pt-2">Horario de actividades</h2>
             </div>
-            <button class="showButton col-3 h-100 showclock btn btn-primary h3 my-1" id="buttonclock">Iniciar Actividad
+            <button class="col-3 h-100 btn btn-primary h3 my-1" id="buttonclock">Iniciar Actividad
                 en tiempo real
             </button>
             <!--RELOJ-->
-            <div class="hiddenn col-2">
+            <div class="col-2" style="display: none" id="base-button">
                 <div class="card h-100 bg-primary text-white h2 pt-2 " id="chronotime">
                     0:00:00
                 </div>
             </div>
             <!--botones del reloj-->
-            <div class="hiddenn col-1" id="chronotime2">
+            <div class="col-1" style="display: none" id="chronotime2">
                 <div class="row">
-                    <button class="btn btn-sm btn-block btn-success"> Iniciar</button>
+                    <button class="btn btn-sm btn-block btn-success" id="start"> Iniciar</button>
                 </div>
                 <div class="row">
-                    <button class="hideButton btn btn-sm btn-block btn-danger"> Detener</button>
+                    <button class="btn btn-sm btn-block btn-success" id="continue" style="display: none"> Renaudar
+                    </button>
+                </div>
+                <div class="row">
+                    <button class="btn btn-sm btn-block btn-success" id="stop" style="display: none"> Parar</button>
+                </div>
+                <div class="row">
+                    <button class="hideButton btn btn-sm btn-block btn-danger" id="clear"> Detener</button>
                 </div>
             </div>
+
+
         </div>
         <div class="row pt-4">
             <div class="col-2">
@@ -445,7 +454,8 @@
                                             <div class="form-group row">
                                                 <label for="select" class="col-4 col-form-label">Categoría</label>
                                                 <div class="col-8">
-                                                    <input id="categoriaf" type="text" name="select" value="Viaje" class="form-control"
+                                                    <input id="categoriaf" type="text" name="select" value="Viaje"
+                                                           class="form-control"
                                                            readonly="readonly">
 
 
@@ -532,18 +542,18 @@
                                                 <label for="select" class="col-4 col-form-label">Categoría</label>
                                                 <div class="col-8">
                                                     <select id="select" name="select" class="custom-select">
-                                                        <option value="dormir">Dormir</option>
-                                                        <option value="estudiar">Estudiar</option>
-                                                        <option value="irclase">Ir a clases</option>
-                                                        <option value="viajar">Viajar</option>
-                                                        <option value="otro">Otro</option>
+                                                        <!-- Colocar segun la base de datos-->
+                                                        {% for category in categories %}
+                                                            <option value="{{ category.c_nombre }}">{{ category.c_nombre }}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="lastname" class="col-4 col-form-label">Fecha</label>
                                                 <div class="col-8">
-                                                    <input id="lastname" name="lastname" placeholder="Fecha" class="form-control" type="date">
+                                                    <input id="lastname" name="lastname" placeholder="Fecha"
+                                                           class="form-control" type="date">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -705,7 +715,7 @@
 
     var actividades = [];
     {% for each in activities %}
-    actividades.push({{ each|safe }});
+        actividades.push({{ each|safe }});
     {% endfor %}
     console.log(actividades);
 
@@ -722,7 +732,7 @@
         var semana = [new Date(fecha.setDate(fecha_domingo)), new Date(fecha.setDate(fecha_domingo + 1)),
             new Date(fecha.setDate(fecha_domingo + 2)), new Date(fecha.setDate(fecha_domingo + 3)),
             new Date(fecha.setDate(fecha_domingo + 4)), new Date(fecha.setDate(fecha_domingo + 5)), new Date(fecha.setDate(fecha_lunes))];
-        var location=['D','L','M','X','J','V','S'];
+        var location = ['D', 'L', 'M', 'X', 'J', 'V', 'S'];
 
 
         for (let i = 0; i < semana.length; i++) {
@@ -738,19 +748,13 @@
                     while (horas_activas >= 0) {
 
                         var celda = actividades[j]['hora_inicio'] + horas_activas;
-                        var ubicacion=location[i]+celda;
-                        if (celda<0){
-                            ubicacion=location[i-1]+(24+celda);
+                        var ubicacion = location[i] + celda;
+                        if (celda < 0) {
+                            ubicacion = location[i - 1] + (24 + celda);
+                        } else if (celda > 23) {
+                            ubicacion = location[i + 1] + (celda - 24);
                         }
-                        else if(celda>23){
-                            ubicacion=location[i+1]+(celda-24);
-                        }
-                        if(actividades[j]['nombre']=="Test 2"){
-                            console.log(celda);
-                            console.log(horas_activas);
-                            console.log(actividades[j]['hora_inicio']);
-                        }
-                        document.getElementById(ubicacion).innerHTML = '<button class="btn btn-sm btn-block" data-toggle="modal" data-target="#Activity" onclick="displayData(actividades['+j+'])">' + actividades[j]['nombre'] + '</button>';
+                        document.getElementById(ubicacion).innerHTML = '<button class="btn btn-sm btn-block" data-toggle="modal" data-target="#Activity" onclick="displayData(actividades[' + j + '])">' + actividades[j]['nombre'] + '</button>';
                         document.getElementById(ubicacion).setAttribute("class", "table-success");
                         horas_activas--;
                     }
@@ -765,24 +769,25 @@
 
     function displayData(activity) {
         console.log("entre");
-        document.getElementById('nombreactividadf').setAttribute('value',activity['nombre']);
+        document.getElementById('nombreactividadf').setAttribute('value', activity['nombre']);
 
-        document.getElementById('descripcionf').innerHTML=activity['descripcion'];
+        document.getElementById('descripcionf').innerHTML = activity['descripcion'];
         var categoria;
         switch (activity['categoria_id']) {
             case 1:
-                categoria="Dormir";
+                categoria = "Dormir";
                 break;
             default:
-                categoria="Otro";
+                categoria = "Otro";
                 break;
         }
-        document.getElementById('categoriaf').setAttribute('value',categoria);
-        document.getElementById('fechaf').setAttribute('value',activity['dia']+"/"+activity['mes']+"/"+activity['anho']);
-        document.getElementById('hinitf').setAttribute('value',activity['hora_inicio']);
-        document.getElementById('h_durf').setAttribute('value',activity['hora_duracion']);
+        document.getElementById('categoriaf').setAttribute('value', categoria);
+        document.getElementById('fechaf').setAttribute('value', activity['dia'] + "/" + activity['mes'] + "/" + activity['anho']);
+        document.getElementById('hinitf').setAttribute('value', activity['hora_inicio']);
+        document.getElementById('h_durf').setAttribute('value', activity['hora_duracion']);
     }
 </script>
+<script src="{% static 'js/clock.js' %}"></script>
 </body>
 
 </html>

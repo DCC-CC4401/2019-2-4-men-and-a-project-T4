@@ -13,24 +13,18 @@ def landing_page(request):
         usuario = request.user.PerfilUsuario
         username = usuario.nombre
         foto = usuario.foto_perfil
-        correo = usuario.nombre
-        actividades_del_usuario = list(Actividades.objects.filter(user_id=usuario.id).values())
+        correo = usuario.correo
+        categorias = list(Categoria.objects.all().values())
 
-        for each in actividades_del_usuario:
-            each['anho'] = int(each['h_inicio'].year)
-            each['mes'] = int(each['h_inicio'].month)
-            each['dia'] = int(each['h_inicio'].day)
-            each['hora_inicio'] = int(each['h_inicio'].hour-3)
-            each['hora_duracion'] = int(each['duracion'].hour)
-            del each['h_inicio']
-            del each['duracion']
+        for each in categorias:
             each = json.dumps(each).encode('utf8')
 
-    return render(request, 'timePlan/LandingPage.html',
-                  {'username': username,
+        context = {'username': username,
                    'photo': foto,
                    'email': correo,
-                   'activities': actividades_del_usuario})  # el tercer elemento es contexto, son las variables # a las que puede acceder el usuario
+                   'categories': categorias}
+
+    return render(request, 'timePlan/LandingPage.html', context)
 
     # Esto hace que deba mostrar el nombre al loguearse
 
@@ -62,7 +56,6 @@ def auth(request):
     email = request.POST['correo']
     contrasena = request.POST['contrasena']
     django_user = PerfilUsuario.objects.get(correo=email).usuario
-    nombre = PerfilUsuario.objects.get(correo=email).nombre
     username = django_user.username
     usuario = authenticate(username=username, password=contrasena)
     if usuario is not None:
