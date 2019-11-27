@@ -123,6 +123,8 @@ class timePlanViewsTest(TestCase):
             duracion=datetime.time(hour=2, minute=0, second=0),
             categoria=c
         )
+        response = self.client.get(reverse('landing_page'))
+        self.assertEqual(response.status_code, 302)
 
         self.client.login(username='username', password='secret')
         response = self.client.get(reverse('landing_page'))
@@ -133,5 +135,7 @@ class timePlanViewsTest(TestCase):
         self.assertEqual(response.context['email'], 'test@mail.cl')
         self.assertEqual(response.context['photo'], 'fotos/aceitunas.jpg')
 
-        expected = response.context['activities']
+        categories = response.context['categories']
+        expected = list(Categoria.objects.all().values())
 
+        self.assertEqual(categories, expected)
