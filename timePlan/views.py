@@ -14,6 +14,18 @@ def landing_page(request):
         username = usuario.nombre
         foto = usuario.foto_perfil
         correo = usuario.correo
+        actividades_del_usuario = list(Actividades.objects.filter(user_id=usuario.id).values())
+
+        for each in actividades_del_usuario:
+            each['anho'] = int(each['h_inicio'].year)
+            each['mes'] = int(each['h_inicio'].month)
+            each['dia'] = int(each['h_inicio'].day)
+            each['hora_inicio'] = int(each['h_inicio'].hour - 3)
+            each['hora_duracion'] = int(each['duracion'].hour)
+            del each['h_inicio']
+            del each['duracion']
+            json.dumps(each).encode('utf8')
+
         categorias = list(Categoria.objects.all().values())
 
         for each in categorias:
@@ -22,6 +34,7 @@ def landing_page(request):
         context = {'username': username,
                    'photo': foto,
                    'email': correo,
+                   'activities': actividades_del_usuario,
                    'categories': categorias}
 
     return render(request, 'timePlan/LandingPage.html', context)
