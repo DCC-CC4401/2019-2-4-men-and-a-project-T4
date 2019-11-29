@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+
 from .forms import ImageUploadForm
 from timePlan.models import *
 from django.contrib.auth.decorators import login_required
@@ -68,14 +70,17 @@ def upload_img(request):
 def auth(request):
     email = request.POST['correo']
     contrasena = request.POST['contrasena']
-    django_user = PerfilUsuario.objects.get(correo=email).usuario
-    username = django_user.username
-    usuario = authenticate(username=username, password=contrasena)
-    if usuario is not None:
-        login(request, usuario)
-        return landing_page(request)
-    else:
-        return render(request, 'timePlan/login.html')
+    try:
+        django_user = PerfilUsuario.objects.get(correo=email).usuario
+    except PerfilUsuario.DoesNotExist:
+        django_user = None
+    if django_user is not None:
+        username = django_user.username
+        usuario = authenticate(username=username, password=contrasena)
+        if usuario is not None:
+            login(request, usuario)
+            return redirect(reverse('landing_page'))
+    return redirect(reverse('login'))
 
 
 @login_required(login_url='')
