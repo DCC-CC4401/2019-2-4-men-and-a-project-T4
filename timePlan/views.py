@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import json
 
+
 @login_required(login_url='')
 def landing_page(request):
     if request.user.is_authenticated:
@@ -35,8 +36,6 @@ def handle_uploaded_file(f):
             destination.write(chunk)
 
 
-
-
 def upload_img(request):
     if request.method == 'POST':
         form = ImageUploadForm(request.POST, request.FILES)
@@ -45,7 +44,7 @@ def upload_img(request):
             m = request.user.PerfilUsuario
             m.foto_perfil = form.cleaned_data['image']
             m.save()
-    return render(request, 'timePlan/UserProfile.html', {'form': form})
+    return redirect(reverse('profile'))
 
 
 def auth(request):
@@ -63,6 +62,7 @@ def auth(request):
             return redirect(reverse('landing_page'))
     return redirect(reverse('login'))
 
+
 @login_required(login_url='')
 def userProfile(request):
     if request.user.is_authenticated:
@@ -76,4 +76,4 @@ def userProfile(request):
 
 def logoutView(request):
     logout(request)
-    return render(request, 'timePlan/login.html')
+    return redirect(reverse('login'))
