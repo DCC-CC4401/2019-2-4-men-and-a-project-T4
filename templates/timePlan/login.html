@@ -7,8 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>login</title>
     <!-- BOOTSTRAP CSS, DO NOT DELETE -->
-    <link rel="stylesheet" href="{%  static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{%  static 'css/custom.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+    <style>
+        .contact1-form-title {
+            display: block;
+            font-size: 24px;
+            color: #333333;
+            line-height: 1.2;
+            text-align: center;
+            padding-bottom: 44px;
+        }
+    </style>
 </head>
 
 <body>
@@ -20,61 +30,102 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
-<script src="{%  static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+    <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
 <form method="post" action="{% url 'auth' %}"> {% csrf_token %}
 
-<div class="wrapper">
+    <div class="wrapper">
 
-    <nav id="sidebar">
-    <div class="sidebar-header text-center py-5">
-        <h1>LOGO</h1>
-    </div>
-    <div class="text-center py-3">
-        <img src="{% static 'img/avatar.png' %}" class="avatar px-1 py-0"> <br>
-        <p class="h6">Bienvenido, ingrese aquí</p>
-    </div>
+        <nav id="sidebar">
+            <div class="sidebar-header text-center py-5">
+                <h1>LOGO</h1>
+            </div>
+            <div class="text-center py-3">
+                <img src="{% static 'img/avatar.png' %}" class="avatar px-1 py-0"> <br>
+                <p class="h6">Bienvenido, ingrese aquí</p>
+            </div>
 
-    <div class="text-left py-4">
-        <table>
-        <tr>
-            <td>Correo</td>
-            <td><input type="email" name="correo" style="width: 12em"></td>
-        </tr>
-        <tr>
-            <td>Contraseña</td>
-            <td><input type="password" name="contrasena" style="width: 12em"></td>
-        </tr>
-        </table>
+            <div class="text-left py-4">
+                <table>
+                    <tr>
+                        <td>Correo</td>
+                        <td><input type="email" name="correo" style="width: 12em"></td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña</td>
+                        <td><input type="password" name="contrasena" style="width: 12em"></td>
+                    </tr>
+                </table>
 
-        <input type="submit" value="login">
-        <input type="hidden" name="next" value="{{ next }}">
-    </div>
-    </nav>
+                <input type="submit" value="login">
+                <input type="hidden" name="next" value="{{ next }}">
+            </div>
+        </nav>
 
-    <div class="container-fluid text-center p-4 main">
-        <div class="row p-2 mx-2 rounded shadow table-success">
-            <div class="col-12 text-center">
-                <h1 class="pt-2">TimePlan</h1>
+        <div class="container-fluid text-center p-4 main">
+            <div class="row p-2 mx-2 rounded shadow table-success">
+                <div class="col-12 text-center">
+                    <h1 class="pt-2">TimePlan</h1>
+                </div>
+            </div>
+            <div class="row p-5 mx-2 rounded shadow">
+                <h2> TimePlan te ayuda a registrar y compartir tu vida con las personas que forman parte de ella </h2>
+                <br>
+                <ul>
+                    <li><h3 class="text-left p-3">Proponte metas a cumplir en tiempos específicos</h3></li>
+                    <li><h3 class="text-left p-3">Registra tus actividades de variadas categorías ahora o después de
+                        realizarlas</h3></li>
+                    <li><h3 class="text-left p-3">Analiza tus tiempos y metas alcanzadas observando sus promedios y
+                        sumas</h3></li>
+                    <li><h3 class="text-left p-3">Compara con tus amigos sus datos mediante promedios, sumas y
+                        desviación estandar de tiempo utilizado por actividad</h3></li>
+                </ul>
+                <!-- Formulario para nuevos usuarios -->
+                <div class=" p-5  rounded shadow" id="Perfil" role="tabpanel" aria-labelledby="Perfil-tab">
+                    <form action="{% url 'register_user' %}" method="post" enctype="multipart/form-data">
+                        <span class="contact1-form-title">Registrate</span>
+                        <!--Nombre-->
+                        <div class="form-group">
+                            <label for="disabledTextInput">Nombre:</label>
+                            <input type="text" id="username" class="form-control">
+                        </div>
+
+                        <!--Apellidos-->
+
+                        <div class="form-group">
+                            <label for="disabledTextInput">Contraseña:</label>
+                            <input type="password" id="password" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="disabledTextInput">Repetir contraseña:</label>
+                            <input type="password" id="c_password" class="form-control">
+                        </div>
+
+                        <!--Correo Electronico -->
+                        <div class="form-group">
+                            <label for="disabledTextInput">Correo electronico:</label>
+                            <input type="email" id="email" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="disabledTextInput">Foto de perfil:</label>
+                            <input id="id_image" type="file" class="form-control-file" name="image">
+                        </div>
+                        <input type="submit" class="btn btn-success" value="Crear perfil" />
+
+
+
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="row p-5 mx-2 rounded shadow">
-            <h2> TimePlan te ayuda a registrar y compartir tu vida con las personas que forman parte de ella </h2>
-            <br>
-            <ul>
-                <li> <h3 class="text-left p-3">Proponte metas a cumplir en tiempos específicos</h3> </li>
-                <li> <h3 class="text-left p-3">Registra tus actividades de variadas categorías ahora o después de realizarlas</h3></li>
-                <li> <h3 class="text-left p-3">Analiza tus tiempos y metas alcanzadas observando sus promedios y sumas</h3></li>
-                <li> <h3 class="text-left p-3">Compara con tus amigos sus datos mediante promedios, sumas y desviación estandar de tiempo utilizado por actividad</h3></li>
-            </ul>
-        </div>
-    </div>
 
-</div>
+    </div>
 
 </form>
 </body>

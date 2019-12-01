@@ -13,6 +13,7 @@ urlpatterns = [path('', views.loginView, name='login'),
                path('auth', views.auth, name='auth'),
                path('profile/', views.userProfile, name='profile'),
                path('upload_img', views.upload_img, name='upload_img'),
+               path('register',views.userRegister, name='register_user'),
                path('amigos/', include('amigos.urls')),
                path('logout/', views.logoutView, name='logout'),
                ]

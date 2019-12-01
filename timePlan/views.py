@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from .forms import ImageUploadForm
+from .forms import *
 from timePlan.models import PerfilUsuario
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -77,3 +78,22 @@ def userProfile(request):
 def logoutView(request):
     logout(request)
     return redirect(reverse('login'))
+
+
+def userRegister(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST, request.FILES)
+        test = form.is_valid()
+        if form.is_valid():
+            user = User.objects.create(
+                username=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password'],
+            )
+            profile = PerfilUsuario.objects.create(
+                usuario=user,
+                nombre=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                foto_perfil=form.cleaned_data['image'],
+            )
+    return redirect(reverse('landing_page'))
