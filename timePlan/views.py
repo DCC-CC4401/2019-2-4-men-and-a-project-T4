@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -85,15 +86,18 @@ def userRegister(request):
         form = NewUserForm(request.POST, request.FILES)
         test = form.is_valid()
         if test:
-            user = User.objects.create_user(
-                username=form.cleaned_data['correoR'],
-                email=form.cleaned_data['correoR'],
-                password=form.cleaned_data['contrasenaR'],
-            )
-            perfil = PerfilUsuario.objects.create(
-                usuario=user,
-                nombre=form.cleaned_data['usuario'],
-                correo=form.cleaned_data['correoR'],
-                foto_perfil=form.cleaned_data['image'],
-            )
+            try:
+                user = User.objects.create_user(
+                    username=form.cleaned_data['correoR'],
+                    email=form.cleaned_data['correoR'],
+                    password=form.cleaned_data['contrasenaR'],
+                )
+                PerfilUsuario.objects.create(
+                    usuario=user,
+                    nombre=form.cleaned_data['usuario'],
+                    correo=form.cleaned_data['correoR'],
+                    foto_perfil=form.cleaned_data['image'],
+                )
+            except IntegrityError as I:
+                return HttpResponse('Correo ya registrado')
     return redirect(reverse('login'))
