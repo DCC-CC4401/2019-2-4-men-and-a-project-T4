@@ -84,16 +84,16 @@ def userRegister(request):
     if request.method == 'POST':
         form = NewUserForm(request.POST, request.FILES)
         test = form.is_valid()
-        if form.is_valid():
-            user = User.objects.create(
-                username=form.cleaned_data['name'],
-                email=form.cleaned_data['email'],
-                password=form.cleaned_data['password'],
+        if test:
+            user = User.objects.create_user(
+                username=form.cleaned_data['correoR'],
+                email=form.cleaned_data['correoR'],
+                password=form.cleaned_data['contrasenaR'],
             )
-            profile = PerfilUsuario.objects.create(
+            perfil = PerfilUsuario.objects.create(
                 usuario=user,
-                nombre=form.cleaned_data['name'],
-                email=form.cleaned_data['email'],
+                nombre=form.cleaned_data['usuario'],
+                correo=form.cleaned_data['correoR'],
                 foto_perfil=form.cleaned_data['image'],
             )
-    return redirect(reverse('landing_page'))
+    return redirect(reverse('login'))

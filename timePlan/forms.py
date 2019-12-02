@@ -6,16 +6,16 @@ class ImageUploadForm(forms.Form):
 
 
 class NewUserForm(forms.Form):
-    name = forms.CharField()
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput)
-    cPassword = forms.CharField(widget=forms.PasswordInput)
-    image = forms.ImageField()
+    usuario = forms.CharField()
+    correoR = forms.EmailField()
+    contrasenaR = forms.CharField(widget=forms.PasswordInput)
+    cContrasena = forms.CharField(widget=forms.PasswordInput)
+    image = forms.ImageField(required=False)
 
     def clean(self):
         cleaned_data = super(NewUserForm, self).clean()
-        confirm_password = cleaned_data.get('cPassword')
-        password = cleaned_data.get('password')
+        confirm_password = cleaned_data.get('cContrasena')
+        password = cleaned_data.get('contrasenaR')
         if password != confirm_password:
             raise forms.ValidationError(
                 "password and confirm_password does not match"
