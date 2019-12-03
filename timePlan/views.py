@@ -106,7 +106,53 @@ def userRegister(request):
 @login_required(login_url='')
 def security(request):
     """
-    Únicamente muestra el template Security.html.
+    Maneja el cambio de contraseña por parte del usuario.
+    """
+    # Obtengo los datos del usuario
+    if request.user.is_authenticated:
+        usuario = request.user.PerfilUsuario
+        username = usuario.nombre
+        foto = usuario.foto_perfil
+        correo = usuario.nombre
+
+    # Se inicializa la variable contexto con las variables básicas.
+    context = {'username': username, 'photo': foto, 'email': correo}
+
+    if request.method == 'GET':
+        return render(request, 'timePlan/Security.html', context)
+
+    if request.method == 'POST':
+        # Obtiene el perfil del usuario
+        password_form = ChangePasswordForm(request.POST)
+
+        if password_form.is_valid():
+            current_password = password_form.cleaned_data['current_password']
+            new_password = password_form.cleaned_data['new_password']
+            confirmation_password = password_form.cleaned_data['confirmation_password']
+
+            # Realiza algunas validaciones
+            if not request.user.check_password(current_password):
+                context['error_message'] = 'La actual contraseña es incorrecta!'
+                return render(request, 'timePlan/Security.html', context)
+            elif new_password != confirmation_password:
+                context['error_message'] = 'La confirmación es incorrecta!'
+                return render(request, 'timePlan/Security.html', context)
+
+            # Se modifica la contraseña
+            request.user.set_password(new_password)
+            request.user.save()
+
+            return HttpResponseRedirect(reverse('successful_password_change'))
+
+        else:
+            context['error_message'] = 'El formulario presenta errores. Complételo otra vez!'
+            return render(request, 'timePlan/Security.html', context)
+
+
+@login_required(login_url='')
+def successful_password_change(request):
+    """
+    Únicamente muestra el template Security.html con el mensaje de cambio de contraseña exitoso.
     """
     # Obtengo los datos del usuario
     if request.user.is_authenticated:
@@ -116,7 +162,7 @@ def security(request):
         correo = usuario.nombre
 
     # Creo la variable contexto
-    context = {'username': username, 'photo': foto, 'email': correo}
+    context = {'username': username, 'photo': foto, 'email': correo, 'success_message': 'Cambio de contraseña exitoso'}
 
     return render(request, 'timePlan/Security.html', context)
 

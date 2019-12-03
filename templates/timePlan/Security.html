@@ -27,32 +27,45 @@
         <div class="tab-content p-4 offset-sm-2 col-sm-8" id="myTabContent">
             <div class="tab-pane fade show active" id="Seguridad" role="tabpanel" aria-labelledby="Seguridad-tab">
 
-                <form>
+                {% if success_message %}
+                    <p><h4>{{ success_message }}</h4></p>
+                {% endif %}
+
+                {% if error_message %}
+                    <p><br><h4>{{ error_message }}</h4><br></p>
+                {% endif %}
+
+                <form action="{% url 'security' %}" method="post">
+                    {% csrf_token %}
+
                     <!--Contraseña actual-->
-                    <fieldset disabled>
+                    <fieldset>
                         <div class="form-group">
-                            <label for="disabledTextInput">Contraseña actual:</label>
-                            <input type="text" id="disabledTextInputContraseñaActual" class="form-control"
-                                   placeholder="************">
+                            <label for="current_password">Contraseña actual:</label>
+                            <input type="password" id="current_password" class="form-control"
+                                   name="current_password" placeholder="Contraseña Actual">
                         </div>
                     </fieldset>
 
                     <!--Contraseña nueva-->
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nueva Contraseña</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1"
-                               aria-describedby="emailHelp" placeholder="Nueva Contraseña">
+                        <label for="new_password">Nueva Contraseña</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password"
+                               placeholder="Nueva Contraseña">
                     </div>
 
                     <!--Contraseña confirmacion-->
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Confirmación Contraseña</label>
-                        <input type="email" class="form-control" id="Pass-conf" aria-describedby="emailHelp"
-                               placeholder="Confirmación Contraseña">
+                        <label for="confirmation_password">Confirmación Contraseña</label>
+                        <input type="password" class="form-control" id="confirmation_password"
+                               name="confirmation_password" placeholder="Confirmación Contraseña">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit">
                     </div>
                 </form>
 
-                <button type="submit" class="btn btn-success">Cambiar contraseña</button>
             </div>
         </div>
     </div>

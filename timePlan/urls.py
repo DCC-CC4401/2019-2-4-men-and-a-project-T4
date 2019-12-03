@@ -19,4 +19,5 @@ urlpatterns = [path('', views.loginView, name='login'),
                path('friends/', views.friends, name='friends'),
                path('security/', views.security, name='security'),
                path('my_activities/', views.my_activities, name='my_activities'),
+               path('successful_password_change/', views.successful_password_change, name='successful_password_change'),
                ]
