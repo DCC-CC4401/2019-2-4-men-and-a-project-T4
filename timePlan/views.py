@@ -142,6 +142,9 @@ def security(request):
             request.user.set_password(new_password)
             request.user.save()
 
+            # Se logea al usuario
+            login(request, request.user)
+
             return HttpResponseRedirect(reverse('successful_password_change'))
 
         else:
