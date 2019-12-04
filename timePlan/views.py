@@ -29,7 +29,7 @@ def landing_page(request):
 
 
 def loginView(request):
-    return render(request, 'timePlan/login.html')
+    return render(request, 'timePlan/Login.html')
 
 
 def handle_uploaded_file(f):
@@ -73,13 +73,16 @@ def userProfile(request):
         apellido = usuario.apellido
         correo = usuario.correo
         foto = usuario.foto_perfil
-    return render(request, 'timePlan/UserProfile.html',
-                  {'username': username, 'apellido': apellido, 'photo': foto, 'correo': correo})
+        context = {'username': username, 'apellido': apellido, 'photo': foto, 'email': correo}
+    return render(request, 'timePlan/UserProfile.html', context)
 
 
 def logoutView(request):
     logout(request)
     return redirect(reverse('login'))
+
+def RegisterView(request):
+    return render(request, 'timePlan/FormularioRegistro.html')
 
 
 def userRegister(request):

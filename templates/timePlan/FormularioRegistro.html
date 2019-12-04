@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>login</title>
+    <!-- BOOTSTRAP CSS, DO NOT DELETE -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+    <style>
+        .contact1-form-title {
+            display: block;
+            font-size: 24px;
+            color: #333333;
+            line-height: 1.2;
+            text-align: center;
+            padding-bottom: 44px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- BOOTSTRAP JS, DO NOT DELETE -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+{% if form.errors %}
+    <p>Su correo y contraseña son incorrectos. Por favor, intente nuevamente.</p>
+{% endif %}
+
+
+
+            <!-- Formulario para nuevos usuarios -->
+            <div class=" p-5  rounded shadow" id="Perfil" role="tabpanel" aria-labelledby="Perfil-tab">
+                <form action="{% url 'register_user' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <span class="contact1-form-title">Regístrate</span>
+                    <!--Nombre-->
+                    <div class="form-group">
+                        <label for="disabledTextInput">Nombre:</label>
+                        <input type="text" id="username" name="usuario" class="form-control">
+                    </div>
+
+                    <!--Apellido-->
+                    <div class="form-group">
+                        <label for="disabledTextInput">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" class="form-control">
+                    </div>
+
+                    <!--Contraseña-->
+                    <div class="form-group">
+                        <label for="disabledTextInput">Contraseña:</label>
+                        <input type="password" id="passwordR" name="contrasenaR" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="disabledTextInput">Repetir contraseña:</label>
+                        <input type="password" id="cPassword" name="cContrasena" class="form-control">
+                    </div>
+
+                    <!--Correo Electronico -->
+                    <div class="form-group">
+                        <label for="disabledTextInput">Correo electrónico:</label>
+                        <input type="email" id="emailR" name="correoR" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="disabledTextInput">Foto de perfil:</label>
+                        <input id="id_image" type="file" class="form-control-file" name="image">
+                    </div>
+
+                    <input type="submit" class="btn btn-success" value="Crear perfil"/>
+                     <input type="hidden" name="next" value="{{ next }}">
+
+
+                </form>
+            </div>
+
+
+
+<body>
+
+</body>
+</html>
