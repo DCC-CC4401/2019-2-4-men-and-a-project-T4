@@ -75,9 +75,9 @@
         </ul>
 
         <ul class="list-unstyled text-center py-4">
-            <!--Logout, cambiar-->
+            <!--Logout-->
             <form action={%  url 'logout' %} method='post'> {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
+                <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
             </form>
         </ul>
     </nav>
@@ -96,7 +96,7 @@
                     0:00:00
                 </div>
             </div>
-            <!--botones del reloj-->
+            <!--Botones del reloj-->
             <div class="hiddenn col-1" id="chronotime2">
                 <div class="row">
                     <button class="btn btn-sm btn-block btn-success"> Iniciar</button>

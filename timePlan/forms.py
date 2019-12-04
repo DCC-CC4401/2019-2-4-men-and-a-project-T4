@@ -7,6 +7,7 @@ class ImageUploadForm(forms.Form):
 
 class NewUserForm(forms.Form):
     usuario = forms.CharField()
+    apellido = forms.CharField()
     correoR = forms.EmailField()
     contrasenaR = forms.CharField(widget=forms.PasswordInput)
     cContrasena = forms.CharField(widget=forms.PasswordInput)

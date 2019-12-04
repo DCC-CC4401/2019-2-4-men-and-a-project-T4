@@ -33,7 +33,7 @@
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
 
 {% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
+    <p>Su correo y contraseña son incorrectos. Por favor, intente nuevamente.</p>
 {% endif %}
 
 
@@ -48,7 +48,8 @@
             <img src="{% static 'img/avatar.png' %}" class="avatar px-1 py-0"> <br>
             <p class="h6">Bienvenido, ingrese aquí</p>
         </div>
-        <form method="post" action="{% url 'auth' %}"> {% csrf_token %}
+        <form method="post" action="{% url 'auth' %}">
+            {% csrf_token %}
             <div class="text-left py-4">
                 <table>
                     <tr>
@@ -61,8 +62,11 @@
                     </tr>
                 </table>
 
-                <input type="submit" value="login">
+                 <ul class="list-unstyled text-center py-4">
+                <!--<input type="submit" value="Ingresar">---->
+                <button type="submit" class="btn btn-primary">Ingresar</button>
                 <input type="hidden" name="next" value="{{ next }}">
+                    </ul>
             </div>
 
         </form>
@@ -79,26 +83,30 @@
             <h2> TimePlan te ayuda a registrar y compartir tu vida con las personas que forman parte de ella </h2>
             <br>
             <ul>
-                <li><h3 class="text-left p-3">Proponte metas a cumplir en tiempos específicos</h3></li>
-                <li><h3 class="text-left p-3">Registra tus actividades de variadas categorías ahora o después de
-                    realizarlas</h3></li>
-                <li><h3 class="text-left p-3">Analiza tus tiempos y metas alcanzadas observando sus promedios y
-                    sumas</h3></li>
-                <li><h3 class="text-left p-3">Compara con tus amigos sus datos mediante promedios, sumas y
-                    desviación estandar de tiempo utilizado por actividad</h3></li>
+                <li><h3 class="text-left p-3">Podrás designar metas a cumplir en tiempos específicos.</h3></li>
+                <li><h3 class="text-left p-3">Registra tus actividades de categorías variadas ahora o después de
+                    realizarlas.</h3></li>
+                <li><h3 class="text-left p-3">Analiza tus tiempos y metas alcanzadas observando estadísticas de cómo vas.</h3></li>
+                <li><h3 class="text-left p-3">Compara tus estadísticas con amigos.</h3></li>
             </ul>
             <!-- Formulario para nuevos usuarios -->
             <div class=" p-5  rounded shadow" id="Perfil" role="tabpanel" aria-labelledby="Perfil-tab">
-                <form action="{% url 'register_user' %}" method="post" enctype="multipart/form-data"> {% csrf_token %}
-                    <span class="contact1-form-title">Registrate</span>
+                <form action="{% url 'register_user' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <span class="contact1-form-title">Regístrate</span>
                     <!--Nombre-->
                     <div class="form-group">
                         <label for="disabledTextInput">Nombre:</label>
                         <input type="text" id="username" name="usuario" class="form-control">
                     </div>
 
-                    <!--Apellidos-->
+                    <!--Apellido-->
+                    <div class="form-group">
+                        <label for="disabledTextInput">Apellido:</label>
+                        <input type="text" id="apellido" name="apellido" class="form-control">
+                    </div>
 
+                    <!--Contraseña-->
                     <div class="form-group">
                         <label for="disabledTextInput">Contraseña:</label>
                         <input type="password" id="passwordR" name="contrasenaR" class="form-control">
@@ -111,7 +119,7 @@
 
                     <!--Correo Electronico -->
                     <div class="form-group">
-                        <label for="disabledTextInput">Correo electronico:</label>
+                        <label for="disabledTextInput">Correo electrónico:</label>
                         <input type="email" id="emailR" name="correoR" class="form-control">
                     </div>
 
@@ -119,6 +127,7 @@
                         <label for="disabledTextInput">Foto de perfil:</label>
                         <input id="id_image" type="file" class="form-control-file" name="image">
                     </div>
+
                     <input type="submit" class="btn btn-success" value="Crear perfil"/>
                      <input type="hidden" name="next" value="{{ next }}">
 

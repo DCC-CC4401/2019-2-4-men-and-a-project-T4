@@ -70,10 +70,11 @@ def userProfile(request):
     if request.user.is_authenticated:
         usuario = request.user.PerfilUsuario
         username = usuario.nombre
+        apellido = usuario.apellido
         correo = usuario.correo
         foto = usuario.foto_perfil
     return render(request, 'timePlan/UserProfile.html',
-                  {'username': username, 'photo': foto, 'correo': correo})
+                  {'username': username, 'apellido': apellido, 'photo': foto, 'correo': correo})
 
 
 def logoutView(request):
@@ -95,6 +96,7 @@ def userRegister(request):
                 PerfilUsuario.objects.create(
                     usuario=user,
                     nombre=form.cleaned_data['usuario'],
+                    apellido=form.cleaned_data['apellido'],
                     correo=form.cleaned_data['correoR'],
                     foto_perfil=form.cleaned_data['image'],
                 )
