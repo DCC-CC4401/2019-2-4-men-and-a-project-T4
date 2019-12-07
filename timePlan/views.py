@@ -81,6 +81,7 @@ def logoutView(request):
     logout(request)
     return redirect(reverse('login'))
 
+
 def RegisterView(request):
     return render(request, 'timePlan/FormularioRegistro.html')
 
@@ -96,13 +97,22 @@ def userRegister(request):
                     email=form.cleaned_data['correoR'],
                     password=form.cleaned_data['contrasenaR'],
                 )
-                PerfilUsuario.objects.create(
-                    usuario=user,
-                    nombre=form.cleaned_data['usuario'],
-                    apellido=form.cleaned_data['apellido'],
-                    correo=form.cleaned_data['correoR'],
-                    foto_perfil=form.cleaned_data['image'],
-                )
+                if form.cleaned_data['image'] is not None:
+                    PerfilUsuario.objects.create(
+                        usuario=user,
+                        nombre=form.cleaned_data['usuario'],
+                        apellido=form.cleaned_data['apellido'],
+                        correo=form.cleaned_data['correoR'],
+                        foto_perfil=form.cleaned_data['image'],
+                    )
+                else:
+                    PerfilUsuario.objects.create(
+                        usuario=user,
+                        nombre=form.cleaned_data['usuario'],
+                        apellido=form.cleaned_data['apellido'],
+                        correo=form.cleaned_data['correoR'],
+                    )
+
             except IntegrityError as I:
                 return HttpResponse('Correo ya registrado')
     return redirect(reverse('login'))

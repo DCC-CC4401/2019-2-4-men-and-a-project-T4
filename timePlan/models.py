@@ -1,5 +1,4 @@
 from django.db import models
-from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 
 
@@ -18,8 +17,8 @@ class PerfilUsuario(models.Model):
     num_actividades = models.IntegerField(default=0)
 
     # Atributos para manejo de amigos y solicitudes
-    amigos = models.ManyToManyField('self')
-    solicitudes = models.ManyToManyField('self')
+    amigos = models.ManyToManyField('self', blank=True)
+    solicitudes = models.ManyToManyField('self',blank=True)
 
 
 class Actividades(models.Model):
