@@ -29,6 +29,9 @@ def landing_page(request):
 
 
 def loginView(request):
+    authenticated = request.user.is_authenticated
+    if authenticated:
+        return redirect(reverse('landing_page'))
     return render(request, 'timePlan/Login.html')
 
 
