@@ -112,7 +112,6 @@ def userRegister(request):
                         apellido=form.cleaned_data['apellido'],
                         correo=form.cleaned_data['correoR'],
                     )
-
             except IntegrityError as I:
                 return HttpResponse('Correo ya registrado')
     return redirect(reverse('login'))
