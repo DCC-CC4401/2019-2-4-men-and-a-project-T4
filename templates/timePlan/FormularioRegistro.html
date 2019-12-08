@@ -38,57 +38,61 @@
 
 
 
-            <!-- Formulario para nuevos usuarios -->
-            <div class=" p-5  rounded shadow" id="Perfil" role="tabpanel" aria-labelledby="Perfil-tab">
-                <form action="{% url 'register_user' %}" method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <span class="contact1-form-title">Regístrate</span>
-                    <!--Nombre-->
-                    <div class="form-group">
-                        <label for="disabledTextInput">Nombre:</label>
-                        <input type="text" id="username" name="usuario" class="form-control" required>
-                    </div>
+<!-- Formulario para nuevos usuarios -->
+<div class=" p-5  rounded shadow" id="Perfil" role="tabpanel" aria-labelledby="Perfil-tab">
+    <form action="{% url 'register_user' %}" method="post" enctype="multipart/form-data" onsubmit="confirmationPopup()">
+        {% csrf_token %}
+        <span class="contact1-form-title">Regístrate</span>
+        <!--Nombre-->
+        <div class="form-group">
+            <label for="disabledTextInput">Nombre:</label>
+            <input type="text" id="username" name="usuario" class="form-control" required>
+        </div>
 
-                    <!--Apellido-->
-                    <div class="form-group">
-                        <label for="disabledTextInput">Apellido:</label>
-                        <input type="text" id="apellido" name="apellido" class="form-control" required>
-                    </div>
+        <!--Apellido-->
+        <div class="form-group">
+            <label for="disabledTextInput">Apellido:</label>
+            <input type="text" id="apellido" name="apellido" class="form-control" required>
+        </div>
 
-                    <!--Contraseña-->
-                    <div class="form-group">
-                        <label for="disabledTextInput">Contraseña:</label>
-                        <input type="password" id="passwordR" name="contrasenaR" class="form-control" required>
-                    </div>
+        <!--Contraseña-->
+        <div class="form-group">
+            <label for="disabledTextInput">Contraseña:</label>
+            <input type="password" id="passwordR" name="contrasenaR" class="form-control" required>
+        </div>
 
-                    <div class="form-group">
-                        <label for="disabledTextInput">Repetir contraseña:</label>
-                        <input type="password" id="cPassword" name="cContrasena" class="form-control" required>
-                    </div>
+        <div class="form-group">
+            <label for="disabledTextInput">Repetir contraseña:</label>
+            <input type="password" id="cPassword" name="cContrasena" class="form-control" required>
+        </div>
 
-                    <!--Correo Electronico -->
-                    <div class="form-group">
-                        <label for="disabledTextInput">Correo electrónico:</label>
-                        <input type="email" id="emailR" name="correoR" class="form-control">
-                    </div>
+        <!--Correo Electronico -->
+        <div class="form-group">
+            <label for="disabledTextInput">Correo electrónico:</label>
+            <input type="email" id="emailR" name="correoR" class="form-control" required>
+        </div>
 
-                    <div class="form-group">
-                        <label for="disabledTextInput">Foto de perfil:</label>
-                        <input id="id_image" type="file" class="form-control-file" name="image">
-                    </div>
+        <div class="form-group">
+            <label for="disabledTextInput">Foto de perfil:</label>
+            <input id="id_image" type="file" class="form-control-file" name="image">
+        </div>
 
-                    <input type="submit" class="btn btn-success" value="Crear perfil"/>
-                     <input type="hidden" name="next" value="{{ next }}">
+        <input type="submit" class="btn btn-success" value="Crear perfil"/>
+        <input type="hidden" name="next" value="{{ next }}">
 
-                    <a href="{%  url 'login' %}" class="btn btn-warning"> Cancelar Registro </a>
-
-
-                </form>
-            </div>
+        <a href="{% url 'login' %}" class="btn btn-warning"> Cancelar Registro </a>
 
 
+    </form>
+</div>
+<script>
+    var userFail={{ error }};
 
-<body>
-
+        window.onload = function () {
+        if (userFail){
+            alert('Correo ya usado')
+        }
+    }
+</script>
 </body>
 </html>

@@ -29,10 +29,13 @@ def landing_page(request):
 
 
 def loginView(request):
+    context = {
+        'success': 'false',
+    }
     authenticated = request.user.is_authenticated
     if authenticated:
         return redirect(reverse('landing_page'))
-    return render(request, 'timePlan/Login.html')
+    return render(request, 'timePlan/Login.html', context)
 
 
 def handle_uploaded_file(f):
@@ -90,6 +93,7 @@ def RegisterView(request):
 
 
 def userRegister(request):
+    context = {}
     if request.method == 'POST':
         form = NewUserForm(request.POST, request.FILES)
         test = form.is_valid()
@@ -115,9 +119,10 @@ def userRegister(request):
                         apellido=form.cleaned_data['apellido'],
                         correo=form.cleaned_data['correoR'],
                     )
+                context['success'] = 'true'
             except IntegrityError as I:
-                return HttpResponse('Correo ya registrado')
-    return redirect(reverse('login'))
+                return render(request, 'timePlan/FormularioRegistro.html', {'error': 'true'})
+    return render(request, 'timePlan/Login.html', context)
 
 
 @login_required(login_url='')
