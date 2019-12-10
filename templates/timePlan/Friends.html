@@ -1,0 +1,128 @@
+{% extends 'timePlan/ProfileBase.html' %}
+
+
+{% block tabs %}
+    <div class="row px-5">
+        <div class="col offset-sm-2 col-sm-8">
+            <ul class="nav nav-tabs" id="pestañas-perfil-de-usuario" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-fix" href="{% url 'profile' %}">Mi Perfil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-fix" href="{% url 'security' %}">Seguridad</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-fix active" href="{% url 'friends' %}">Amigos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-fix" href="{% url 'my_activities' %}">Mis Actividades</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content_tabs %}
+    <div class="row px-5">
+        <div class="tab-content p-4 offset-sm-2 col-sm-8" id="myTabContent">
+            <div class="tab-pane fade show active" id="Amigos" role="tabpanel" aria-labelledby="Amigos-tab">
+
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Buscar amigos"
+                           aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button" id="button-addon2">Buscar</button>
+                    </div>
+                </div>
+
+                <!-- Solicitudes de amistad -->
+                <div class="card spaced" style="width: 100%;">
+                    <div class="card-header">
+                        Solicitudes
+                        <button class="btn btn-sm btn-success float-right" type="button" data-toggle="collapse"
+                                data-target="#friends-request-list" aria-expanded="false"
+                                aria-controls="friends-list"
+                                id="friends-request-toggle" onclick="toggleName(this.id)">Ver más
+                        </button>
+                    </div>
+                    <ul class="list-group list-group-flush collapse" id="friends-request-list">
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">
+                                Keanu Reeves</a>
+                            <button type="button" class="btn btn-sm btn-outline-success float-right">Aceptar
+                            </button>
+                            <p class="float-right" style="margin-left: 10px"></p>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Rechazar
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">
+                                Bobby Tables</a>
+                            <button type="button" class="btn btn-sm btn-outline-success float-right">Aceptar
+                            </button>
+                            <p class="float-right" style="margin-left: 10px"></p>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Rechazar
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">
+                                Grace Hopper</a>
+                            <button type="button" class="btn btn-sm btn-outline-success float-right">Aceptar
+                            </button>
+                            <p class="float-right" style="margin-left: 10px"></p>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Rechazar
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">Ada Lovelace</a>
+                            <button type="button" class="btn btn-sm btn-outline-success float-right">Aceptar
+                            </button>
+                            <p class="float-right" style="margin-left: 10px"></p>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Rechazar
+                            </button>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <!-- Amigos aceptados -->
+                <div class="card spaced" style="width: 100%;">
+                    <div class="card-header">
+                        Amigos
+                        <button class="btn btn-sm btn-success float-right" type="button" data-toggle="collapse"
+                                data-target="#friends-list" aria-expanded="false" aria-controls="friends-list"
+                                id="friends-toggle" onclick="toggleName(this.id)">Ver más
+                        </button>
+                    </div>
+                    <ul class="list-group list-group-flush collapse" id="friends-list">
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">
+                                Christopher Machine</a>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Eliminar
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">
+                                Alonzo Church</a>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Eliminar
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">
+                                Allan Hotdog</a>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Eliminar
+                            </button>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="404" class="fr-link">
+                                Joan Clarke</a>
+                            <button type="button" class="btn btn-sm btn-outline-danger float-right">Eliminar
+                            </button>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

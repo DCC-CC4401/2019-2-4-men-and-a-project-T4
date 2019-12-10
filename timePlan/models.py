@@ -11,12 +11,13 @@ class PerfilUsuario(models.Model):
     # Datos del usuario
     usuario = models.OneToOneField(User, related_name='PerfilUsuario', on_delete=models.CASCADE)
     nombre = models.CharField(max_length=30)
+    apellido = models.CharField(max_length=30, blank=True)
     correo = models.EmailField(max_length=256, unique=True)
     foto_perfil = models.ImageField(upload_to='fotos', default='fotos/aceitunas.jpg')
 
     # Atributos para manejo de amigos y solicitudes
-    amigos = models.ManyToManyField('self')
-    solicitudes = models.ManyToManyField('self')
+    amigos = models.ManyToManyField('self', blank=True)
+    solicitudes = models.ManyToManyField('self',blank=True)
 
     def extraerActividadesSemanales(self, start_of_week):
         end_week = start_of_week + datetime.timedelta(7)

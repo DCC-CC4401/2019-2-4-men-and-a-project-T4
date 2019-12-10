@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Login</title>
+    <!-- BOOTSTRAP CSS, DO NOT DELETE -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
+    <style>
+        .contact1-form-title {
+            display: block;
+            font-size: 24px;
+            color: #333333;
+            line-height: 1.2;
+            text-align: center;
+            padding-bottom: 44px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- BOOTSTRAP JS, DO NOT DELETE -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+{% if form.errors %}
+    <p>Su correo y contraseña son incorrectos. Por favor, intente nuevamente.</p>
+{% endif %}
+
+
+
+<div class="wrapper">
+
+    <nav id="sidebar">
+        <div class="sidebar-header text-center py-5">
+            <h1>LOGO</h1>
+        </div>
+        <div class="text-center py-3">
+            <img src="{% static 'img/avatar.png' %}" class="avatar px-1 py-0"> <br>
+            <p class="h6">Bienvenido, ingrese aquí</p>
+        </div>
+        <form method="post" action="{% url 'auth' %}">
+            {% csrf_token %}
+            <div class="text-left py-4">
+                <table>
+                    <tr>
+                        <td>Correo</td>
+                        <td><input type="email" name="correo" style="width: 12em" required></td>
+                    </tr>
+                    <tr>
+                        <td>Contraseña</td>
+                        <td><input type="password" name="contrasena" style="width: 12em" required></td>
+                    </tr>
+                </table>
+
+                    <ul class="list-unstyled text-center py-4">
+                <button type="submit" class="btn btn-primary">Ingresar</button>
+                <input type="hidden" name="next" value="{{ next }}">
+                    </ul>
+
+                        <!--Registrar usuario-->
+                    <ul class="list-unstyled text-center py-4">
+                        <a href="{% url 'RegisterView' %}" class="btn btn-success">Registrar Usuario
+                        </a>
+                    </ul>
+
+            </div>
+
+        </form>
+
+    </nav>
+
+    <div class="container-fluid text-center p-4 main">
+        <div class="row p-2 mx-2 rounded shadow table-success">
+            <div class="col-12 text-center">
+                <h1 class="pt-2">TimePlan</h1>
+            </div>
+        </div>
+        <div class="row p-5 mx-2 rounded shadow">
+            <h2> TimePlan te ayuda a registrar y compartir tu vida con las personas que forman parte de ella </h2>
+            <br>
+            <ul>
+                <li><h3 class="text-left p-3">Podrás designar metas a cumplir en tiempos específicos.</h3></li>
+                <li><h3 class="text-left p-3">Registra tus actividades de categorías variadas ahora o después de
+                    realizarlas.</h3></li>
+                <li><h3 class="text-left p-3">Analiza tus tiempos y metas alcanzadas observando estadísticas de cómo vas.</h3></li>
+                <li><h3 class="text-left p-3">Compara tus estadísticas con amigos.</h3></li>
+            </ul>
+
+            <!--Aquí iba el formulario -->
+        </div>
+    </div>
+
+</div>
+<script>
+    var newUser={{ success }};
+
+    window.onload = function () {
+        if (newUser){
+            alert('Usuario creado exitosamente')
+        }
+    }
+</script>
+</body>
+</html>
