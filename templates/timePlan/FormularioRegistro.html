@@ -86,11 +86,11 @@
     </form>
 </div>
 <script>
-    var userFail={{ error }};
+    var userFail ="{{ error }}";
 
-        window.onload = function () {
-        if (userFail){
-            alert('Correo ya usado')
+    window.onload = function () {
+        if (userFail != "") {
+            alert(userFail);
         }
     }
 </script>

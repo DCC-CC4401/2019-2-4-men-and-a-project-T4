@@ -121,7 +121,11 @@ def userRegister(request):
                     )
                 context['success'] = 'true'
             except IntegrityError as I:
-                return render(request, 'timePlan/FormularioRegistro.html', {'error': 'true'})
+                context['error'] = 'Correo ya en uso'
+                return render(request, 'timePlan/FormularioRegistro.html', context)
+        else:
+            context['error'] = 'Hay errores en el formulario'
+            return render(request, 'timePlan/FormularioRegistro.html', context)
     return render(request, 'timePlan/Login.html', context)
 
 
